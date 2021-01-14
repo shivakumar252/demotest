@@ -1,0 +1,89 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>All login audit :</h3>
+<!-- <ul>
+    <li *ngFor="let audit of audits">
+        <br/><span class="badge badge-primary">{{audit.user}}</span>
+        <br/><span class="badge badge-secondary">{{audit._id}}</span>
+        <br/>Login - {{audit.loginTime}}
+        <br/>Logout - {{audit.logoutTime}}
+        <br/>IP - {{audit.ip}}
+    </li>
+
+</ul> -->
+
+
+<div class="form-group">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" [(ngModel)]="searchText" 
+               class="form-control" placeholder="Search By Text" />
+      </div>
+      <div class="col-md-6">
+        <select name="date" id="date" (change)="onTimeFormatChange($event)"> 
+          <option value="volvo">12Hrs Format</option>
+          <option value="saab">24Hrs Format</option>
+        </select>
+      </div>
+    </div>
+  
+  </div>
+
+ 
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">
+        <button (click)="sortBy('user')">User</button>
+        <span class="sortorder" ng-show="propertyName === 'user'" ng-class="{reverse: reverse}"></span>
+      </th>
+      <th scope="col">
+         <button (click)="sortBy('ip')">IP</button>
+         <span class="sortorder" ng-show="propertyName === 'ip'" ng-class="{reverse: reverse}"></span>
+        </th>
+        <th scope="col">
+          <button (click)="sortBy('_id')">ID</button>
+          <span class="sortorder" ng-show="propertyName === '_id'" ng-class="{reverse: reverse}"></span>
+         </th>
+      <th scope="col">
+        <button (click)="sortBy('loginTime')">LogInTime</button>
+        <span class="sortorder" ng-show="propertyName === 'loginTime'" ng-class="{reverse: reverse}"></span>
+      </th>  
+      <th scope="col">
+        <button (click)="sortBy('logoutTime')">LogoutTime</button>
+        <span class="sortorder" ng-show="propertyName === 'logoutTime'" ng-class="{reverse: reverse}"></span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let audit of audits | category : searchText">
+      <td class="badge badge-pill badge-primary">{{audit.user}}</td>
+      <td>{{audit.ip}}</td>
+      <td class="badge badge-pill badge-secondary" >{{audit._id}}</td>
+      
+      <td *ngIf="twelveHourFormat">
+        {{audit.loginTime | date: 'dd/MM/yyyy'}}<br>
+        {{audit.loginTime | date:'hh.mm a'}}
+
+      </td>
+           
+      <td *ngIf="twentyFourHourFormat">
+        {{audit.loginTime | date: 'dd/MM/yyyy'}}<br>
+        {{audit.loginTime | date:'HH.mm a'}}
+
+      </td>
+      <td *ngIf="twentyFourHourFormat">{{audit.logoutTime | date:'dd/MM/yyyy'}}<br>
+       {{audit.logoutTime |date:'HH.mm a'}}
+      </td>
+      <td *ngIf="twelveHourFormat">{{audit.logoutTime | date:'dd/MM/yyyy'}}<br>
+        {{audit.logoutTime |date:'hh.mm a'}}
+       </td>
+      
+    </tr>
+  </tbody>
+</table>
+<div class="card-footer pb-0 pt-3">
+ 
+</div>
